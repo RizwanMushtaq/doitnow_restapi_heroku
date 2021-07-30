@@ -17,7 +17,7 @@ Router.post("/", Users.insert)
 //Update User Password with specific username
 Router.put("/", Users.updatePassword)
 //Verify User Password
-Router.get("/verify", Users.VerifyPassword)
+Router.post("/verify", Users.VerifyPassword)
 
 
 module.exports = Router

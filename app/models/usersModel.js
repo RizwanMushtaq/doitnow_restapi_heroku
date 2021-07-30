@@ -21,6 +21,7 @@ Users.getAll = (result) => {
         }
         
         console.log(rows)
+        console.log(typeof(rows))
         result(null, rows)
     })
 }
@@ -36,7 +37,6 @@ Users.add = (user, result) => {
             result(err, null)
             return
         }
-
         if(!rows.length){
             //No user found So add user record in DB
             bcrypt.hash(user.password, saltRounds, (err, hash)=>{
@@ -53,7 +53,8 @@ Users.add = (user, result) => {
                         }
         
                         console.log(JSON.stringify(rows))
-                        result(null, { success: 'user added at id = ' + rows.insertId})
+                        // result(null, { success: 'user added at id = ' + rows.insertId})
+                        result(null, '01') //01 means success, user is added in database
                 })
             })
             
@@ -61,7 +62,7 @@ Users.add = (user, result) => {
         }
         //User name exit in DB
         console.log('user with username = ' + user.username + ' already exits. Try with new Username')
-        result(null, { error: 'user with username = ' + user.username + ' already exits. Try with new Username'})
+        result(null, '02') //02 means error, user already exits in database
         return
     })    
 }
@@ -106,7 +107,7 @@ Users.matchPassword = (user, result) => {
 
         if(!rows.length){
             console.log('user with username = ' + user.username + ' not found')
-            result(null, { error: 'user with username = ' + user.username + ' not found'})
+            result(null, 'IncorrectUserName')
             return
         }
 
