@@ -2,18 +2,21 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require('cors')
 //importing Routes
-const UsersRoutes = require("./app/routes/usersRouter")
+const usersRoutes = require("./app/routes/usersRouter")
+const todosRoutes = require("./app/routes/todosRouter")
 
 console.log('In Index.js')
 
 const app = express();
 app.use(cors());
+app.use(express.json())
 
 // parse requests of content-type: application/json
 app.use(bodyParser.json());
 
 //Forward all routes 
-app.use("/users", UsersRoutes);
+app.use("/users", usersRoutes)
+app.use("/todos", todosRoutes)
 
 // simple route
 app.get("/", (req, res) => {

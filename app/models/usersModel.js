@@ -107,8 +107,8 @@ Users.matchPassword = (user, result) => {
 
         if(!rows.length){
             console.log('user with username = ' + user.username + ' not found')
-            result(null, 'IncorrectUserName')
-            return
+            
+            return result(err, null)
         }
 
         console.log(typeof(rows))
