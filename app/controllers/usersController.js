@@ -75,7 +75,9 @@ exports.VerifyPassword = async (req, res) => {
                 res.status(200).send(
                     {
                         accessToken: accessToken,
-                        username: req.body.username
+                        userName: rows[0].User,
+                        userID: rows[0].U_ID,
+                        userEMail: rows[0].EMail
                     }
                 )
                 return

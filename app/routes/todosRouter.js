@@ -11,7 +11,7 @@ console.log('In todosRouter.js')
 Router.get("/", authenticateToken, Todos.ReadAll)
 
 
-
+//function to authenticate the user request
 function authenticateToken(req, res, next){
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
