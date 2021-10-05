@@ -8,8 +8,9 @@ const Todos = require("../controllers/todosController")
 console.log('In todosRouter.js')
 
 // reading  all data
-Router.get("/", authenticateToken, Todos.ReadAll)
-
+Router.post("/read", authenticateToken, Todos.ReadToDoItems)
+// post todo item in database
+Router.post("/write", authenticateToken, Todos.WriteToDoItem)
 
 //function to authenticate the user request
 function authenticateToken(req, res, next){
