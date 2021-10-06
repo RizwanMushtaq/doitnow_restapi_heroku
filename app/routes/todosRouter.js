@@ -7,10 +7,16 @@ const Todos = require("../controllers/todosController")
 
 console.log('In todosRouter.js')
 
-// reading  all data
-Router.post("/read", authenticateToken, Todos.ReadToDoItems)
+// reading  todo items for date selected for specific user data
+Router.post("/read", authenticateToken, Todos.ReadToDoItemsForDateSelected)
 // post todo item in database
 Router.post("/write", authenticateToken, Todos.WriteToDoItem)
+// update done state of todo item in database
+Router.post("/updateDoneState", authenticateToken, Todos.UpdateDoneState)
+// delete item in database
+Router.post("/deleteItem", authenticateToken, Todos.DeleteItem)
+//Reading all todo items for a spefic user
+Router.post("/readAllItemsForUser", authenticateToken, Todos.ReadToDoItemsForUser)
 
 //function to authenticate the user request
 function authenticateToken(req, res, next){

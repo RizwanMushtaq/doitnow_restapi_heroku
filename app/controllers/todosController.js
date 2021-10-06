@@ -6,7 +6,7 @@ const dbconnection = require("../models/db")
 const bcrypt = require("bcrypt")
 const saltRounds = 10
 
-exports.ReadToDoItems = (req, res) => {
+exports.ReadToDoItemsForDateSelected = (req, res) => {
     console.log("In User Controller ReadToDoItems")
 
     let userID = req.body.userID
@@ -53,4 +53,62 @@ exports.WriteToDoItem = (req, res) => {
             res.status(200).send({result: 'success'})
     })
 
+}
+
+exports.UpdateDoneState = (req, res) => {
+    console.log("In user Controller UpdateDoneState function")
+
+    let state = req.body.state
+    let itemId = req.body.itemId
+
+    dbconnection.setupConnection.query("UPDATE todos SET Done = ? WHERE Item_ID = ?", [state ,itemId], 
+        (err, rows, fields) =>{
+            if(err){
+                res.status(400).send()
+                return
+            }
+
+            res.status(200).send({result: 'success'})
+    })
+
+}
+
+exports.DeleteItem = (req, res) => {
+    console.log("In user Controller DeleteItem function")
+
+    let itemId = req.body.itemId
+
+    dbconnection.setupConnection.query("DELETE FROM todos WHERE Item_ID = ?", [itemId], 
+        (err, rows, fields) =>{
+            if(err){
+                res.status(400).send()
+                return
+            }
+
+            res.status(200).send({result: 'success'})
+    })
+}
+
+exports.ReadToDoItemsForUser = (req, res) => {
+    console.log("In user Controller ReadToDoItemsForUser function")
+
+    let userID = req.body.userID
+
+    dbconnection.setupConnection.query("SELECT * FROM todos WHERE B_ID = ?", [userID],
+        (err, rows, fields) => {
+            if(err){
+                console.log(err)
+                res.status(400).send()
+                return
+            }
+            if(!rows.length){
+                console.log('No data found for selected user')
+                res.status(200).send({})
+                return
+            }
+
+            console.log(rows)
+            res.status(200).send({"ToDoList": rows})
+        }
+    )
 }
