@@ -5,6 +5,8 @@ const cors = require('cors')
 const usersRoutes = require("./app/routes/usersRouter")
 const todosRoutes = require("./app/routes/todosRouter")
 
+const port = process.env.PORT || 8090 ;
+
 console.log('In Index.js')
 
 const app = express();
@@ -25,6 +27,6 @@ app.get("/", (req, res) => {
 });
 
 // set port, listen for requests
-app.listen(8090, () => {
+app.listen(port, () => {
     console.log("Server is running on port 8090.");
 });
