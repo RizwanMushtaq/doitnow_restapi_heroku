@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 console.log('In UsersController.js')
 
 const dbconnection = require("../models/db")
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcryptjs")
 const saltRounds = 10
 
 exports.ReadToDoItemsForDateSelected = (req, res) => {
