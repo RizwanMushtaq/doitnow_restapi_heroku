@@ -19,18 +19,46 @@ exports.ReadAll = (req, res) => {
     })
 }
 
-exports.insert = (req, res) => {
-    console.log(req.body)
+exports.RegisterUser = (req, res) => {
+    console.log('In User Controller RegisterUser function')
 
-    Users.add(req.body, (err, data) => {
+    //First check if user with the name already exits in database
+    dbconnection.setupConnection.query("SELECT * FROM users WHERE User = ?", [req.body.username], 
+    (err, rows, fields) =>{
         if(err){
-            res.send(err)
+            console.log(err)
+            res.status(400).send()
             return
         }
-
-        res.send(data)
-    })
-
+        if(!rows.length){
+            //No user found So add user record in DB
+            bcrypt.hash(req.body.password, saltRounds, (err, hash)=>{
+                if(err){
+                    console.log(err)
+                    res.status(400).send()
+                    return
+                }
+                console.log(hash)
+                dbconnection.setupConnection.query("INSERT INTO users SET ?", {User:req.body.username, EMail: req.body.email, Password: hash}, 
+                    (err, rows, fields) =>{
+                        if(err){
+                            result(err, null)
+                            res.status(400).send()
+                            return
+                        }
+        
+                        console.log(JSON.stringify(rows))
+                        res.status(200).send({ result: 'success' })
+                })
+            })
+            
+            return
+        }
+        //User name exit in DB
+        console.log('user with username = ' + req.body.username + ' already exits. Try with new Username')
+        res.status(200).send({ result: 'duplicate' })
+        return
+    })   
 }
 
 exports.updatePassword = (req, res) => {
@@ -50,7 +78,7 @@ exports.VerifyPassword = async (req, res) => {
     (err, rows, fields) =>{
         if(err){
             console.log(err)
-            result(err, null)
+            res.status(400).send()
             return
         }
 

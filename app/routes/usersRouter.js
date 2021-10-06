@@ -13,7 +13,7 @@ console.log('In UserRouter.js')
 // reading  all data
 Router.get("/", Users.ReadAll)
 //Insert User data
-Router.post("/", Users.insert)
+Router.post("/registerUser", Users.RegisterUser)
 //Update User Password with specific username
 Router.put("/", Users.updatePassword)
 //Verify User Password
