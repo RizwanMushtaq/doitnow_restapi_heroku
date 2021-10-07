@@ -93,6 +93,11 @@ exports.VerifyPassword = async (req, res) => {
         console.log(rows[0].Password)
         
         bcrypt.compare(req.body.password, rows[0].Password, (error, response)=>{
+            if(error){
+                console.log('wrong Password')
+                res.status(400).send()
+                return
+            }
             if(response){
                 const username = req.body.username
                 const user = {name: username}
