@@ -17,7 +17,7 @@ app.use(express.json())
 app.use(bodyParser.json());
 
 //Forward all routes 
-// app.use("/users", usersRoutes)
+app.use("/users", usersRoutes)
 // app.use("/todos", todosRoutes)
 
 // simple route
