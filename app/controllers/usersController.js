@@ -49,10 +49,10 @@ exports.RegisterUser = (req, res) => {
         
                         console.log(JSON.stringify(rows))
                         res.status(200).send({ result: 'success' })
+                        return
                 })
             })
             
-            return
         }
         //User name exit in DB
         console.log('user with username = ' + req.body.username + ' already exits. Try with new Username')
