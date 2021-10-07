@@ -53,11 +53,15 @@ exports.RegisterUser = (req, res) => {
                 })
             })
             
+            return
         }
-        //User name exit in DB
-        console.log('user with username = ' + req.body.username + ' already exits. Try with new Username')
-        res.status(200).send({ result: 'duplicate' })
-        return
+        if(rows.length){
+            //User name exit in DB
+            console.log('user with username = ' + req.body.username + ' already exits. Try with new Username')
+            res.status(200).send({ result: 'duplicate' })
+            return
+        }
+        
     })   
 }
 
